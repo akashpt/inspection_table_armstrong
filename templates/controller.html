@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEXA INNOVATES - Controller</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/all.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav_start_flex">
+        <div class="nav-logo">
+          <img src="../static/logo/logo.png" alt="Texa Innovates" /><span></span>
+        </div>
+        <div class="nav-center">TABLE Inspection</div>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn" onclick="goHome()">HOME</button>
+        <button class="nav-btn" onclick="goTraining()">Training</button>
+        <button class="nav-btn" onclick="openReport()">Reports</button>
+        <button class="nav-btn" onclick="openController()">Controller</button>
+        <button class="nav-btn" onclick="openSetting()">Settings</button>
+      </div>
+    </nav>
+
+    <main class="simple-page">
+      <section class="simple-panel">
+        <div class="simple-panel-head controller-head">
+          <h1>Controller</h1>
+          <p id="controllerStatus">Camera Exposure</p>
+        </div>
+        <div class="controller-body">
+          <div class="controller-setting-row">
+            <div class="controller-setting-label">
+              <span class="controller-setting-icon"><i class="fa-solid fa-network-wired"></i></span>
+              <div>
+                <div class="field-lbl d-block">PLC Status</div>
+                <div class="controller-setting-value" id="plcStatusText">Checking...</div>
+              </div>
+            </div>
+          </div>
+          <div class="controller-setting-row">
+            <div class="controller-setting-label">
+              <span class="controller-setting-icon"><i class="fa-solid fa-camera"></i></span>
+              <div>
+                <div class="field-lbl d-block">Exposure</div>
+                <div class="controller-setting-value d-none" id="controllerExposureText">--</div>
+              </div>
+            </div>
+            <input class="finput controller-exposure-input" id="controllerExposure" type="number" step="1" />
+          </div>
+          <div class="controller-actions">
+            <button class="mBtn primary" id="btnSaveExposure">
+              <i class="fa-solid fa-floppy-disk"></i>
+              Save Exposure
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="defect-overlay" id="defectOverlay" aria-hidden="true">
+      <div class="defect-modal">
+        <div class="defect-modal-head">
+          <strong id="defectModalTitle">Defect Image</strong>
+          <button id="btnDefectClose" type="button" aria-label="Close">x</button>
+        </div>
+        <div class="defect-modal-body">
+          <div class="defect-image-wrap">
+            <img id="defectModalImage" alt="Detected defect" />
+            <p id="defectImageFallback">Defect image is not available.</p>
+          </div>
+        </div>
+        <div class="defect-modal-foot">
+          <button id="btnDefectReset" type="button" class="mBtn primary">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../static/script/controller.js"></script>
+  </body>
+</html>

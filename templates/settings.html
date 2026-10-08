@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEXA INNOVATES - Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav_start_flex">
+        <div class="nav-logo">
+          <img src="../static/logo/logo.png" alt="Texa Innovates" /><span></span>
+        </div>
+        <div class="nav-center">TABLE Inspection</div>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn" onclick="goHome()">HOME</button>
+        <button class="nav-btn" onclick="goTraining()">Training</button>
+        <button class="nav-btn" onclick="openReport()">Reports</button>
+        <button class="nav-btn" onclick="openController()">Controller</button>
+        <button class="nav-btn" onclick="openSetting()">Settings</button>
+      </div>
+    </nav>
+
+    <main class="settings-page">
+      <section class="settings-panel">
+        <!-- <div class="modal-head">
+          <div class="modal-head-title">Settings</div>
+        </div> -->
+        <div class="modal-body">
+          <div>
+            <div class="section-label">Training Configuration</div>
+            <div class="fields-grid cols-2 job_config_flex" style="margin-top: 10px">
+              <div class="field">
+                <div class="field-lbl">Job Configuration</div>
+                <select class="finput" id="settingsConfigSelect">
+                  <option value="">-- Select configuration --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-label">Roll Information</div>
+            <div class="fields-grid cols-2" style="margin-top: 10px">
+              <div class="field d-none">
+                <div class="field-lbl">Roll ID</div>
+                <input class="finput" id="settingsRollId" />
+              </div>
+              <div class="field d-none">
+                <div class="field-lbl">Shift</div>
+                <select class="finput" id="settingsShift" disabled>
+                  <option value="">-- Select shift --</option>
+                </select>
+              </div>
+                 <div class="field">
+                <div class="field-lbl">Add Operator</div>
+                <div class="operator-add-row">
+                  <input class="finput" id="settingsNewOperatorName" />
+                  <button class="mBtn secondary compact" id="settingsAddOperatorBtn" type="button">Add</button>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field-lbl">Operator Name</div>
+                <div class="operator-select-row">
+                  <select class="finput" id="settingsOperatorName">
+                    <option value="">-- Select operator --</option>
+                  </select>
+                  <button class="mBtn danger compact" id="settingsDeleteOperatorBtn" type="button">Delete</button>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field-lbl">Machine Number</div>
+                <input class="finput" id="settingsMachineNumber" />
+              </div>
+           
+              <div class="field d-none">
+                <div class="field-lbl">Fabric Type</div>
+                <input class="finput" id="settingsFabricType" />
+              </div>
+            </div>
+            <div class="operator-list" id="settingsOperatorList"></div>
+          </div>
+
+          <div>
+            <div class="section-label">Confidence Settings</div>
+            <div class="fields-grid cols-2" style="margin-top: 10px">
+              <div class="field">
+                <div class="field-lbl">Block Confidence</div>
+                <input class="finput" id="blockConfidence" type="number" value="128" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Vertical Confidence</div>
+                <input class="finput" id="verticalConfidence" type="number" value="189" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Horizontal Confidence</div>
+                <input class="finput" id="horizontalConfidence" type="number" value="297" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">New Vertical Confidence</div>
+                <input class="finput" id="newVerticalConfidence" type="number" value="109" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">New Horizontal Confidence</div>
+                <input class="finput" id="newHorizontalConfidence" type="number" value="134" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Threshold Value</div>
+                <select class="finput" id="thresholdValue">
+                  <option value="">-- Select threshold --</option>
+                  <option value="10">10%</option>
+                  <option value="20">20%</option>
+                  <option value="30">30%</option>
+                  <option value="40">40%</option>
+                  <option value="50">50%</option>
+                  <option value="60">60%</option>
+                  <option value="70">70%</option>
+                  <option value="80">80%</option>
+                  <option value="90">90%</option>
+                  <option value="100" selected>100%</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-label">Camera JSON Settings</div>
+            <div class="fields-grid cols-2" style="margin-top: 10px">
+              <div class="field">
+                <div class="field-lbl">Camera Indexes</div>
+                <input class="finput" id="cameraIndexes" placeholder="0, 0, 0, 0" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Capture Step MM</div>
+                <input class="finput" id="captureStepMm" type="number" step="0.1" />
+              </div>
+              <div class="field d-none">
+                <div class="field-lbl">Exposure</div>
+                <input class="finput" id="cameraExposure" type="number" />
+              </div>
+              <div class="field ">
+                <div class="field-lbl">Min Exposure</div>
+                <input class="finput" disabled id="minExposure" type="number" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Max Exposure</div>
+                <input class="finput" disabled id="maxExposure" type="number" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="mBtn neutral" onclick="goHome()">Cancel</button>
+          <button class="mBtn primary" id="settingsOkBtn">OK</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../static/script/settings.js"></script>
+  </body>
+</html>

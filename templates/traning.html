@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEXA INNOVATES - Training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/all.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="../static/css/traning.css" />
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav_start_flex">
+      <div class="nav-logo">
+        <img src="../static/logo/logo.png" alt="Texa Innovates" /><span></span>
+      </div>
+      <div class="nav-center">TABLE Inspection</div>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn" onclick="goHome()">HOME</button>
+        <button class="nav-btn" onclick="goTraining()">Training</button>
+        <button class="nav-btn" onclick="openReport()">Reports</button>
+        <button class="nav-btn" onclick="openController()">Controller</button>
+        <button class="nav-btn" onclick="openSetting()">Settings</button>
+      </div>
+    </nav>
+
+    <main class="training-page">
+      <section class="camera-wrap training-camera" id="camWrap">
+        <img id="cameraFeed" class="camera-feed" alt="Camera feed" />
+        <video
+          id="video"
+          class="camera-feed browser-feed"
+          autoplay
+          playsinline
+          muted
+        ></video>
+
+        <div class="no-signal" id="noSignal">
+          <div class="no-signal-icon">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M23 7l-7 5 7 5V7z" />
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+              <line x1="1" y1="1" x2="23" y2="23" />
+            </svg>
+          </div>
+          <p>No Signal</p>
+        </div>
+
+        <div class="scan-line"></div>
+        <div class="bracket tl"></div>
+        <div class="bracket tr"></div>
+        <div class="bracket bl"></div>
+        <div class="bracket br"></div>
+        <div class="live-chip"><span class="dot"></span> LIVE</div>
+      </section>
+
+      <aside class="training-controls" aria-label="Training controls">
+        <div class="action-grid">
+          <section class="training-section">
+            <h2>Live Camera Only</h2>
+            <div class="action-grid">
+              <button
+                class="training-action camera-action start"
+                id="btnLiveStart"
+              >
+                <i class="fa-solid fa-video"></i>
+
+                <strong>Live Start</strong>
+              </button>
+              <button
+                class="training-action camera-action inactive stop"
+                id="btnLiveStop"
+                disabled
+              >
+                <i class="fa-solid fa-video-slash"></i>
+                <strong>Live Stop</strong>
+              </button>
+            </div>
+          </section>
+
+          <section class="training-section">
+            <h2>Controls</h2>
+            <div class="action-grid">
+              <button
+                class="training-action round-action start"
+                id="btnStartTraining"
+              >
+                <i class="fa-solid fa-circle-play"></i>
+                <strong>Start</strong>
+              </button>
+              <button
+                class="training-action round-action inactive stop"
+                id="btnStopTraining"
+                disabled
+              >
+                <i class="fa-solid fa-circle-stop"></i>
+                <strong>Stop</strong>
+              </button>
+            </div>
+          </section>
+        </div>
+        <div class="capture_image_flex">
+          <section class="capture-card">
+            <div class="image_cap_flex">
+              <h2>IMAGES CAPTURED</h2>
+              <strong id="trainingImageCount">0</strong>
+            </div>
+            <div class="job-total">
+              <span>Total in job:</span>
+              <strong id="trainingFolderCount">0</strong>
+            </div>
+          </section>
+
+          <section class="model-section">
+            <label for="trainedModelSel">Trained Models</label>
+            <div class="traning_flex">
+              <select id="trainedModelSel" class="model-select">
+                <option value="">-- Select Job ID --</option>
+              </select>
+              <button class="view-images-btn" id="btnViewImages" type="button">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <rect
+                    x="3"
+                    y="5"
+                    width="18"
+                    height="14"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <circle cx="8" cy="10" r="1.5" fill="currentColor" />
+                  <path
+                    d="M5 17l4.5-4.5 3 3 2-2L19 18"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                </svg>
+                View Images
+              </button>
+              
+            </div>
+            <div
+              class="model-progress-panel"
+              id="modelProgressPanel"
+              aria-hidden="true"
+            >
+              <div class="model-progress-card">
+                <i class="fa-solid fa-gear model-progress-icon"></i>
+                <h3>Training in Progress</h3>
+                <strong id="modelProgressPercent" class="model-progress-percent">0%</strong>
+                <div class="model-progress-track">
+                  <div class="model-progress-fill" id="modelProgressFill"></div>
+                </div>
+                <p id="modelProgressMessage">
+                  Processing captured images and updating model...
+                </p>
+                <strong id="modelProgressCount" class="model-progress-count">
+                  Found 0 training images
+                </strong>
+                <span id="modelProgressStatus" class="model-progress-status">
+                  Model: checking
+                </span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Job Picker Modal -->
+    <div
+      class="image-overlay job-picker-overlay"
+      id="jobPickerOverlay"
+      aria-hidden="true"
+    >
+      <div class="image-modal job-picker-modal">
+        <div class="image-modal-head">
+          <strong>Select training configuration</strong>
+          <button id="btnJobPickerCancel" type="button" aria-label="Close">
+            &#x2715;
+          </button>
+        </div>
+        <div class="job-picker-body">
+          <div class="training-config-grid">
+            <label for="trainingJobId">JOB ID</label>
+            <input id="trainingJobId" class="job-picker-select" type="text" />
+            <label for="trainingRollColor">ROLL COLOR</label>
+            <input id="trainingRollColor" class="job-picker-select" type="text" />
+            <label for="trainingPolygonSize">Material Name</label>
+            <input id="trainingPolygonSize" class="job-picker-select" type="text" />
+          </div>
+          <div class="combined-preview" id="trainingCombinedPreview"></div>
+          <label for="jobPickerList">Job ID</label>
+          <select id="jobPickerList" class="job-picker-select">
+            <option value="">-- Select job ID --</option>
+          </select>
+        </div>
+        <div class="job-picker-foot">
+          <button
+            type="button"
+            class="picker-btn cancel-btn"
+            onclick="closeJobPickerModal()"
+          >
+            Cancel
+          </button>
+          <button id="btnJobPickerOk" type="button" class="picker-btn ok-btn">
+            Start training
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="image-overlay" id="imageOverlay" aria-hidden="true">
+      <div class="image-modal training-image-modal">
+        <div class="image-modal-head">
+          <strong id="imageModalTitle">Training Images</strong>
+          <button id="btnCloseImages" type="button" aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="image-preview" id="imagePreview">
+          <p>No images found for this job.</p>
+        </div>
+        <div class="image-modal-foot image-toolbar">
+          <div class="image-nav-actions">
+            <button id="btnPrevImage" type="button">
+              <i class="fa-solid fa-chevron-left"></i>
+              Prev
+            </button>
+            <span id="imageCounter">0 / 0</span>
+            <button id="btnNextImage" type="button">
+              Next
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="image-file-actions">
+            <button id="btnDeleteImage" type="button">
+              <i class="fa-solid fa-trash"></i>
+              Delete
+            </button>
+            <button id="btnTrainImage" type="button">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              Train
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="image-overlay training-complete-overlay"
+      id="trainingCompleteOverlay"
+      aria-hidden="true"
+    >
+      <div class="image-modal training-complete-modal">
+        <div class="image-modal-head">
+          <strong>Training Completed</strong>
+        </div>
+        <div class="training-complete-body">
+          <i class="fa-solid fa-circle-check"></i>
+          <p id="trainingCompleteMessage">Model training completed.</p>
+        </div>
+        <div class="image-modal-foot training-complete-foot">
+          <button id="btnTrainingCompleteOk" type="button" class="picker-btn ok-btn">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="image-overlay polygon-overlay" id="polygonOverlay" aria-hidden="true">
+      <div class="image-modal polygon-modal">
+        <div class="image-modal-head">
+          <strong>Draw training polygon</strong>
+          <button id="btnPolygonCancel" type="button">x</button>
+        </div>
+        <div class="polygon-stage" id="polygonStage">
+          <img id="polygonImage" alt="First training capture" />
+          <canvas id="polygonCanvas"></canvas>
+        </div>
+        <div class="image-modal-foot polygon-foot">
+          <span id="polygonHint">Click on the image to add polygon points.</span>
+          <div>
+            <button id="btnPolygonReset" type="button">Reset</button>
+            <button id="btnPolygonOk" type="button">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../static/script/traning.js"></script>
+  </body>
+</html>

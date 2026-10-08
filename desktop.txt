@@ -1,0 +1,20 @@
+nano ~/Desktop/table.desktop
+
+[Desktop Entry]
+Version=1.0
+Name=table
+Comment=AI-based fabric defect detection
+Exec=gnome-terminal -- bash -c "/home/texa/inspection_table/dist/table/table; echo ''; echo '🔴 Press Enter to exit...'; read"
+Icon=/home/texa/inspection_table/static/logo/logo.png
+Terminal=false
+Type=Application
+Categories=Utility;
+
+
+
+
+then control o + enter + control x
+
+
+chmod +x ~/Desktop/Inspection_Table.desktop
+

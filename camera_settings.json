@@ -1,0 +1,26 @@
+{
+  "camera_indexes": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "capture_step_mm": 20.0,
+  "selected_job": {
+    "Job_ID": "2903_black_jerscy",
+    "roll_id": "13",
+    "shift": "B",
+    "operator_name": "Bala",
+    "machine_number": "1",
+    "fabric_type": "",
+    "block_confidence": "128",
+    "vertical_confidence": "189",
+    "horizontal_confidence": "297",
+    "new_vertical_confidence": "109",
+    "new_horizontal_confidence": "134",
+    "threshold_value": "100"
+  },
+  "exposure": 20,
+  "min_exposure": 0,
+  "max_exposure": 15600
+}

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEXA INNOVATES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/all.min.css" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  </head>
+  <body>
+    <!-- ═══ NAV ═══ -->
+    <nav>
+      <div class="nav_start_flex">
+        <div class="nav-logo">
+          <img src="../static/logo/logo.png" alt="" /><span></span>
+        </div>
+    
+      <div class="nav-center">TABLE Inspection</div>
+        </div>
+      <div class="nav-right">
+        <button class="nav-btn" onclick="goHome()">HOME</button>
+        <button class="nav-btn" onclick="goTraining()">Training</button>
+        <button class="nav-btn" onclick="openReport()">Reports</button>
+        <button class="nav-btn" onclick="openController()">Controller</button>
+        <button class="nav-btn" onclick="openSetting()">Settings</button>
+      </div>
+    </nav>
+
+    <!-- ═══ CAMERA ═══ -->
+    <div class="camera-wrap" id="camWrap">
+      <img id="cameraFeed" class="camera-feed" alt="Camera feed" />
+      <video
+        id="video"
+        class="camera-feed browser-feed"
+        autoplay
+        playsinline
+        muted
+      ></video>
+
+      <div class="no-signal" id="noSignal">
+        <div class="no-signal-icon">
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M23 7l-7 5 7 5V7z" />
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+            <line x1="1" y1="1" x2="23" y2="23" />
+          </svg>
+        </div>
+        <p>No Signal</p>
+      </div>
+
+      <div class="scan-line"></div>
+
+      <div class="bracket tl"></div>
+      <div class="bracket tr"></div>
+      <div class="bracket bl"></div>
+      <div class="bracket br"></div>
+
+      <div class="live-chip"><span class="dot"></span> LIVE</div>
+    </div>
+
+    <!-- ═══ BOTTOM PANEL ═══ -->
+    <div class="bottom">
+      <!-- CAM status pills -->
+      <div class="cam-row">
+        <div class="cam-pill" id="c1">
+          <span class="cam-indicator"></span>
+          <div class="cam-info">
+            <div class="cam-name">CAM 1</div>
+            <div class="cam-status-text" id="s1">Idle</div>
+          </div>
+        </div>
+        <div class="cam-pill" id="c2">
+          <span class="cam-indicator"></span>
+          <div class="cam-info">
+            <div class="cam-name">CAM 2</div>
+            <div class="cam-status-text" id="s2">Idle</div>
+          </div>
+        </div>
+        <div class="cam-pill" id="c3">
+          <span class="cam-indicator"></span>
+          <div class="cam-info">
+            <div class="cam-name">CAM 3</div>
+            <div class="cam-status-text" id="s3">Idle</div>
+          </div>
+        </div>
+        <div class="cam-pill" id="c4">
+          <span class="cam-indicator"></span>
+          <div class="cam-info">
+            <div class="cam-name">CAM 4</div>
+            <div class="cam-status-text" id="s4">Idle</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Control bar -->
+      <div class="control-bar">
+        <button class="ctrl ghost " id="btnNewRoll" onclick="openNewRoll()">
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="16" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+          </svg>
+          New Roll
+        </button>
+      
+      
+
+        <div class="ctrl-divider"></div>
+
+        <button class="ctrl start" id="btnStartCamera" onclick="startCamera()">
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+          Start
+        </button>
+        <button class="ctrl stop" id="btnStopCamera" onclick="stopCamera()" disabled>
+          <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+          </svg>
+          Stop
+        </button>
+
+        <div class="ctrl-divider d-none"></div>
+
+        <button class="ctrl ghost d-none" onclick="resetAll()">
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <polyline points="1 4 1 10 7 10" />
+            <path d="M3.51 15a9 9 0 1 0 .49-4.36" />
+          </svg>
+          Reset
+        </button>
+      </div>
+
+      <!-- Footer meta -->
+      <div class="footer-meta-row">
+        <div class="f-left">
+    
+          <div class="f-version">v1.0 · TEXA Vision</div>
+        </div>
+        <div class="f-stats">
+          <div class="f-stat">
+            <div class="f-stat-label">Job</div>
+            <div class="f-stat-value" id="fJob">100</div>
+          </div>
+          <div class="f-stat-sep">·</div>
+          <div class="f-stat">
+            <div class="f-stat-label">Roll</div>
+            <div class="f-stat-value" id="fRoll">1015</div>
+          </div>
+          <div class="f-stat-sep">·</div>
+          <div class="f-stat">
+            <div class="f-stat-label">Shift</div>
+            <div class="f-stat-value" id="fShift">--</div>
+          </div>
+          <div class="f-stat-sep">Â·</div>
+          <div class="f-stat">
+            <div class="f-stat-label">Length</div>
+            <div class="f-stat-value" id="fLength">-- m</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ═══ NEW ROLL MODAL ═══ -->
+    <div class="defect-overlay" id="defectOverlay" aria-hidden="true">
+      <div class="defect-modal">
+        <div class="defect-modal-head">
+          <strong id="defectModalTitle">Defect Image</strong>
+          <button id="btnDefectClose" type="button" aria-label="Close">x</button>
+        </div>
+        <div class="defect-modal-body">
+          <div class="defect-image-wrap">
+            <img id="defectModalImage" alt="Detected defect" />
+            <p id="defectImageFallback">Defect image is not available.</p>
+          </div>
+        </div>
+        <div class="defect-modal-foot">
+          <button id="btnDefectReset" type="button" class="mBtn primary">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="rollModal">
+      <div class="modal">
+        <div class="modal-head">
+          <div class="modal-head-title">New Roll</div>
+          <button class="modal-x" onclick="closeModal('rollModal')">✕</button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="section-label">Operator Information</div>
+            <div class="fields-grid cols-2 job_config_flex" style="margin-top: 10px">
+              <div class="field">
+                <div class="field-lbl">Operator Name</div>
+                <select class="finput" id="nOperatorName">
+                  <option value="">-- Select operator --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="mBtn neutral" onclick="closeModal('rollModal')">
+            Cancel
+          </button>
+          <button class="mBtn primary" onclick="saveRoll()">Confirm</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../static/script/index.js"></script>
+  </body>
+</html>

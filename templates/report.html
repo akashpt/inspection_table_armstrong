@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEXA INNOVATES - Reports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav_start_flex">
+        <div class="nav-logo">
+          <img src="../static/logo/logo.png" alt="Texa Innovates" /><span></span>
+        </div>
+        <div class="nav-center">TABLE Inspection</div>
+      </div>
+      <div class="nav-right">
+        <button class="nav-btn" onclick="goHome()">HOME</button>
+        <button class="nav-btn" onclick="goTraining()">Training</button>
+        <button class="nav-btn" onclick="openReport()">Reports</button>
+        <button class="nav-btn" onclick="openController()">Controller</button>
+        <button class="nav-btn" onclick="openSetting()">Settings</button>
+      </div>
+    </nav>
+
+    <main class="simple-page">
+      <section class="simple-panel">
+        <div class="simple-panel-head">
+          <h1>Reports</h1>
+          <p>Available training configurations</p>
+        </div>
+        <div class="simple-table-wrap">
+          <table class="simple-table">
+            <thead>
+              <tr>
+                <th>Configuration</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="reportRows"></tbody>
+          </table>
+          <div class="simple-empty" id="reportEmpty">No configurations found.</div>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../static/script/report.js"></script>
+  </body>
+</html>

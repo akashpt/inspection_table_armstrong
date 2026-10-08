@@ -107,6 +107,21 @@
 
       <!-- Control bar -->
       <div class="control-bar">
+          <button class="ctrl ghost " id="btnJob" onclick="openJobDetailsModal()">
+          <svg
+            width="25"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="16" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+          </svg>
+          Job
+        </button>
         <button class="ctrl ghost " id="btnNewRoll" onclick="openNewRoll()">
           <svg
             width="25"
@@ -172,7 +187,7 @@
           <div class="f-stat-sep">·</div>
           <div class="f-stat">
             <div class="f-stat-label">Roll</div>
-            <div class="f-stat-value" id="fRoll">1015</div>
+            <div class="f-stat-value" id="fRoll">-</div>
           </div>
           <div class="f-stat-sep">·</div>
           <div class="f-stat">
@@ -188,6 +203,53 @@
       </div>
     </div>
     <!-- ═══ NEW ROLL MODAL ═══ -->
+    <div class="overlay" id="jobDetailsModal">
+      <div class="modal job-details-modal">
+        <div class="modal-head">
+          <div class="modal-head-title">Job Details</div>
+          <button class="modal-x" onclick="closeModal('jobDetailsModal')">x</button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="section-label">Job Information</div>
+            <div class="fields-grid cols-2 job-details-grid" style="margin-top: 10px">
+              <div class="field">
+                <div class="field-lbl">Batch Number</div>
+                <input class="finput job-detail-input" id="jobBatchNumber" type="text" autocomplete="off" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Shade Number</div>
+                <input class="finput job-detail-input" id="jobShadeNumber" type="text" autocomplete="off" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">FRN</div>
+                <input class="finput job-detail-input" id="jobFrn" type="text" autocomplete="off" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">DC Number</div>
+                <input class="finput job-detail-input" id="jobDcNumber" type="text" autocomplete="off" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Color</div>
+                <input class="finput job-detail-input" id="jobColor" type="text" autocomplete="off" />
+              </div>
+              <div class="field">
+                <div class="field-lbl">Weight</div>
+                <input class="finput job-detail-input" id="jobWeight" type="text" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="mBtn neutral" onclick="closeModal('jobDetailsModal')">
+            Cancel
+          </button>
+          <button class="mBtn secondary" onclick="resetJobDetails()">Reset</button>
+          <button class="mBtn primary" onclick="saveJobDetails()">OK</button>
+        </div>
+      </div>
+    </div>
+
     <div class="defect-overlay" id="defectOverlay" aria-hidden="true">
       <div class="defect-modal">
         <div class="defect-modal-head">
@@ -221,6 +283,10 @@
                 <select class="finput" id="nOperatorName">
                   <option value="">-- Select operator --</option>
                 </select>
+              </div>
+              <div class="field">
+                <div class="field-lbl">Roll Number</div>
+                <input class="finput" id="nRollNumber" type="text" autocomplete="off" />
               </div>
             </div>
           </div>

@@ -49,6 +49,85 @@ function openJobId() {
   loadIndexConfigOptions();
   document.getElementById("jobModal").classList.add("open");
 }
+
+const jobDetailsStorageKey = "jobDetails";
+const jobDetailFields = [
+  ["jobBatchNumber", "batch_number"],
+  ["jobShadeNumber", "shade_number"],
+  ["jobFrn", "frn"],
+  ["jobDcNumber", "dc_number"],
+  ["jobColor", "color"],
+  ["jobWeight", "weight"],
+];
+
+function readStoredJobDetails() {
+  try {
+    return JSON.parse(localStorage.getItem(jobDetailsStorageKey) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function setJobDetailsReadonly(readonly) {
+  jobDetailFields.forEach(([id]) => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.readOnly = readonly;
+    }
+  });
+}
+
+function applyJobDetails(details = {}) {
+  jobDetailFields.forEach(([id, key]) => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.value = String(details[key] || "");
+    }
+  });
+  setJobDetailsReadonly(Boolean(details.locked));
+}
+
+function readJobDetails() {
+  return Object.fromEntries(
+    jobDetailFields.map(([id, key]) => {
+      const input = document.getElementById(id);
+      return [key, input ? input.value.trim() : ""];
+    })
+  );
+}
+
+function openJobDetailsModal() {
+  applyJobDetails(readStoredJobDetails());
+  document.getElementById("jobDetailsModal").classList.add("open");
+}
+
+function saveJobDetails() {
+  const details = {
+    ...readJobDetails(),
+    locked: true,
+  };
+
+  try {
+    localStorage.setItem(jobDetailsStorageKey, JSON.stringify(details));
+  } catch (error) {
+    console.error("Job details cache failed:", error);
+  }
+
+  applyJobDetails(details);
+  toast("Job details saved");
+}
+
+function resetJobDetails() {
+  try {
+    localStorage.removeItem(jobDetailsStorageKey);
+  } catch (error) {
+    console.error("Job details reset failed:", error);
+  }
+
+  applyJobDetails({});
+  toast("Job details cleared");
+}
+
 async function openNewRoll() {
   const selectedJob = getCachedJobId();
   const details = getCachedRollDetails(selectedJob);
@@ -221,7 +300,16 @@ function rememberRollDetails(details, jobId = "") {
 function readRollDetails() {
   return {
     operator_name: document.getElementById("nOperatorName").value.trim(),
+    roll_id: document.getElementById("nRollNumber").value.trim(),
+    roll_id_source: "manual",
   };
+}
+
+function setRollDisplay(rollId) {
+  const rollEl = document.getElementById("fRoll");
+  if (rollEl) {
+    rollEl.textContent = String(rollId || "").trim() || "-";
+  }
 }
 
 function applyRollDetails(details = {}, includeForm = false) {
@@ -235,10 +323,14 @@ function applyRollDetails(details = {}, includeForm = false) {
     if (operatorSelect) {
       operatorSelect.value = operatorName;
     }
+    const rollNumberInput = document.getElementById("nRollNumber");
+    if (rollNumberInput) {
+      rollNumberInput.value = details.roll_id_source === "manual" ? rollId : "";
+    }
   }
 
-  if (rollId) {
-    document.getElementById("fRoll").textContent = rollId;
+  if (details.roll_id_source === "manual") {
+    setRollDisplay(rollId);
   }
   if (shift) {
     document.getElementById("fShift").textContent = shift;
@@ -744,5 +836,11 @@ const defectOverlay = document.getElementById("defectOverlay");
 if (defectOverlay) {
   defectOverlay.addEventListener("click", function (event) {
     if (event.target === defectOverlay) closeDefectModal();
+  });
+}
+const rollNumberInput = document.getElementById("nRollNumber");
+if (rollNumberInput) {
+  rollNumberInput.addEventListener("input", function () {
+    setRollDisplay(rollNumberInput.value);
   });
 }

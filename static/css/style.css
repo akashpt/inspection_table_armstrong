@@ -1783,4 +1783,11 @@ nav::after {
 .defect-modal-foot .mBtn {
   min-width: 110px;
 }
- 
+
+.job-details-modal {
+  width: min(620px, 95vw);
+}
+
+.fields-grid.cols-2.job-details-grid .field {
+  width: calc(50% - 12px);
+}

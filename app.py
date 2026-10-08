@@ -11,18 +11,18 @@ from classes.database import create_database_and_tables
 from path import TEMPLATES_DIR,INDEX_PAGE,CONFIG_FILE
 import os
 import sys
-os.environ["QT_QPA_PLATFORM"] = "xcb"
+# os.environ["QT_QPA_PLATFORM"] = "xcb"
 
-if getattr(sys, 'frozen', False):
-    # PyInstaller bundle
-    os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.join(sys._MEIPASS, "cv2", "qt", "plugins", "platforms")
-    print("execute1")
-else:
-    # Running directly (venv)
-    import cv2
-    qt_plugin_path = os.path.join(os.path.dirname(cv2.__file__), "qt", "plugins", "platforms")
-    os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = qt_plugin_path
-    print("execute2")
+# if getattr(sys, 'frozen', False):
+#     # PyInstaller bundle
+#     os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = os.path.join(sys._MEIPASS, "cv2", "qt", "plugins", "platforms")
+#     print("execute1")
+# else:
+#     # Running directly (venv)
+#     import cv2
+#     qt_plugin_path = os.path.join(os.path.dirname(cv2.__file__), "qt", "plugins", "platforms")
+#     os.environ["QT_QPA_PLATFORM_PLUGIN_PATH"] = qt_plugin_path
+#     print("execute2")
 
 def ensure_camera_settings():
     default_settings = {
